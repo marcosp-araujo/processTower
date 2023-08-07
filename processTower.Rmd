@@ -61,7 +61,7 @@ processData <- function(df,allHeights){
 
  In the next code cell/chunk we call the function that displays which sensor was found.
 ```{r}
-## Calling processData function ##############################################
+## Calling the processData function ############################################
 allHeights = list(21,70,116) #list of heights
 dfProcessed <- processData(df,allHeights)
 ```
