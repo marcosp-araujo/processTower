@@ -1,0 +1,80 @@
+---
+title: "Process Tall Tower Data"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook to process data 
+from the Tall Tower database. This notebook requires data in .csv format derived 
+from following repository:
+https://github.com/marcosp-araujo/Tower2csv. This notebooks reads the .csv file
+and computes the average value between different sensors at the same height
+for each parameter (humidity, pressure, wind direction and speed). Let's start 
+by simply reading the data.
+```{r}
+# Reading the cvs file as a data frame ###########
+df <- read.csv(file="2009.csv", header=TRUE)
+```
+
+Now, we continue by visualizing the data frame. If browsing the data frame by clicking in the black right arrow, it's possible to see that there is more than one sensor for each parameter. For instance, there are three wind 
+direction sensors at 116 m (S1, S2 and S3), namely, wdiragl116S1, wdiragl116S2 
+and wdiragl116S3. 
+```{r}
+head(df)
+```
+
+Next, a function to process the data named "processData" is defined. It averages data from different sensors at the same height. This function requires 
+two inputs: (i) a data frame, (ii) and a list of heights. It is worth noting that the average can be directly computed because 
+the Tall  Tower database has been pre-processed and the mast shadow effect was previously fixed.
+```{r}
+## FUNCTION TO PROCESS DATA ####################################################
+processData <- function(df,allHeights){
+  
+# Defining the sensors' names
+  allSensors = list("huragl","psagl","taagl","wdiragl","windagl")
+# New data frame to receive processed data
+  dfProcessed <- df["time"]
+# Converting time data from character format to timestamp - only need for plotting
+  #dfProcessed$time <- strptime(dfProcessed$time, "%Y-%m-%d %H:%M:%S") 
+  
+  for (sensor in allSensors){
+    for (height in allHeights){
+    # Sensor full name
+      sensorFullName = paste(sensor, height, sep = "")
+    # All columns from "sensor" at the same height 
+      columns = grep(sensorFullName, colnames(df), value = TRUE)
+      
+    # Checking if the columns was found
+      if (length(columns) == 0) { # If none columns was found
+        print(paste(sensorFullName," column was not found"))
+        next # Continue with the next iteration step
+      }
+      print(paste("Reading", toString(columns)))
+      data_tmp = df[columns]  # Data from "sensor"
+      
+    # Computing the mean value between different sensors at the same height
+      dfProcessed[sensorFullName] <- rowMeans(data_tmp, na.rm = T)
+    }
+  }
+  return(dfProcessed)
+}
+```
+
+ In the next code cell/chunk we call the function that displays which sensor was found.
+```{r}
+## Calling processData function ##############################################
+allHeights = list(21,70,116) #list of heights
+dfProcessed <- processData(df,allHeights)
+```
+
+In the following, we visualize the processed data.
+```{r}
+head(dfProcessed)
+```
+
+Finally, the processed data frame can be saved or exported as .csv file by using the following command lines
+```{r}
+## Exporting dataframe to a .csv file ##########################################
+saveFileName = paste(getwd(),'/',"2009_avg",".csv", sep = "")
+write.csv(dfProcessed, saveFileName, row.names=FALSE, quote=FALSE, 
+          fileEncoding = "UTF-8")
+```
