@@ -4,5 +4,5 @@ Please, click in the link bellow to view the R Notebook:
 
 https://marcosp-araujo.github.io/processTower/processTower.nb.html
 
-The R notebook above requires data in .csv format derived from following Python repository: https://github.com/marcosp-araujo/Tower2csv.
+It requires data in .csv format derived from the following Python repository: https://github.com/marcosp-araujo/Tower2csv.
 
