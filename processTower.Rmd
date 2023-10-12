@@ -1,30 +1,40 @@
 ---
 title: "Process Tall Tower Data"
 output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook to process data 
-from the Tall Tower database. This notebook requires data in .csv format derived 
-from the following [Tower2csv] (https://github.com/marcosp-araujo/Tower2csv) repository:
-This notebooks reads the .csv file
-and computes the average value between different sensors at the same height
-for each parameter (humidity, pressure, wind direction and speed). Let's start 
-by simply reading the data.
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook to
+process data from the Tall Tower database. This notebook requires data in .csv format derived from the following [Tower2csv](https://github.com/marcosp-araujo/Tower2csv) repository: This
+notebooks reads the .csv file and computes the average value between
+different sensors at the same height for each parameter (humidity,
+pressure, wind direction and speed). Let's start by simply reading the
+data.
+
 ```{r}
 # Reading the cvs file as a data frame ###########
 df <- read.csv(file="2009.csv", header=TRUE)
 ```
 
-Now, we continue by visualizing the data frame. If browsing the data frame by clicking in the black right arrow, it's possible to see that there is more than one sensor for each parameter. For instance, there are three wind 
-direction sensors at 116 m (S1, S2 and S3), namely, wdiragl116S1, wdiragl116S2 
-and wdiragl116S3. 
+Now, we continue by visualizing the data frame. If browsing the data
+frame by clicking in the black right arrow, it's possible to see that
+there is more than one sensor for each parameter. For instance, there
+are three wind direction sensors at 116 m (S1, S2 and S3), namely,
+wdiragl116S1, wdiragl116S2 and wdiragl116S3.
+
 ```{r}
 head(df)
 ```
 
-Next, a function to process the data named "processData" is defined. It averages data from different sensors at the same height. This function requires 
-two inputs: (i) a data frame, (ii) and a list of heights. It is worth noting that the average can be directly computed because 
-the Tall  Tower database has been pre-processed and the mast shadow effect was previously fixed.
+Next, a function to process the data named "processData" is defined. It
+averages data from different sensors at the same height. This function
+requires two inputs: (i) a data frame, (ii) and a list of heights. It is
+worth noting that the average can be directly computed because the Tall
+Tower database has been pre-processed and the mast shadow effect was
+previously fixed.
+
 ```{r}
 ## FUNCTION TO PROCESS DATA ####################################################
 processData <- function(df,allHeights){
@@ -59,7 +69,9 @@ processData <- function(df,allHeights){
 }
 ```
 
- In the next code cell/chunk we call the function that displays which sensor was found.
+In the next code cell/chunk we call the function that displays which
+sensor was found.
+
 ```{r}
 ## Calling the processData function ############################################
 allHeights = list(21,70,116) #list of heights
@@ -67,11 +79,14 @@ dfProcessed <- processData(df,allHeights)
 ```
 
 In the following, we visualize the processed data.
+
 ```{r}
 head(dfProcessed)
 ```
 
-Finally, the processed data frame can be saved or exported as .csv file by using the following command lines
+Finally, the processed data frame can be saved or exported as .csv file
+by using the following command lines
+
 ```{r}
 ## Exporting dataframe to a .csv file ##########################################
 saveFileName = paste(getwd(),'/',"2009_avg",".csv", sep = "")
