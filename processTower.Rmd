@@ -5,8 +5,8 @@ output: html_notebook
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook to process data 
 from the Tall Tower database. This notebook requires data in .csv format derived 
-from following repository:
-https://github.com/marcosp-araujo/Tower2csv. This notebooks reads the .csv file
+from the following [Tower2csv] (https://github.com/marcosp-araujo/Tower2csv) repository:
+This notebooks reads the .csv file
 and computes the average value between different sensors at the same height
 for each parameter (humidity, pressure, wind direction and speed). Let's start 
 by simply reading the data.
