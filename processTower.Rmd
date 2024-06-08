@@ -7,9 +7,8 @@ editor_options:
 ---
 
 This [R Markdown](http://rmarkdown.rstudio.com) processes raw data from the Tall Tower database. 
-The processing consists of reading the .csv file input file with raw data and computing the average value between measurements 
-from sensors (humidity,pressure, wind direction and speed) installed at different booms of the mast at the same height. 
-It requires data in .csv format derived this repository_ [Tower2csv](https://github.com/marcosp-araujo/Tower2csv)
+The processing consists of reading the .csv input file with raw data and computing the average value between measurements from sensors (humidity,pressure, wind direction and speed) installed at different booms of the mast at the same height. 
+It requires data in .csv format derived this repository: [Tower2csv](https://github.com/marcosp-araujo/Tower2csv)
 
 Let's start by simply reading the data.
 
