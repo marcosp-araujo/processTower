@@ -6,13 +6,14 @@ editor_options:
     wrap: 72
 ---
 
-This [R Markdown](http://rmarkdown.rstudio.com) processes raw data from the Tall Tower database. The processing consists of reading the .csv file input file with raw data and computing the average value between measurements from sensors (humidity,
-pressure, wind direction and speed) installed at different booms of the mast at the same height. It requires data in .csv format derived from the following repository [Tower2csv](https://github.com/marcosp-araujo/Tower2csv):
+This [R Markdown](http://rmarkdown.rstudio.com) processes raw data from the Tall Tower database. 
+The processing consists of reading the .csv file input file with raw data and computing the average value between measurements 
+from sensors (humidity,pressure, wind direction and speed) installed at different booms of the mast at the same height. 
+It requires data in .csv format derived this repository_ [Tower2csv](https://github.com/marcosp-araujo/Tower2csv)
 
 Let's start by simply reading the data.
 
 ```{r}
-# Reading the cvs file as a data frame ###########
 df <- read.csv(file="2009.csv", header=TRUE)
 ```
 
@@ -34,16 +35,13 @@ Tower database has been pre-processed and the mast shadow effect was
 previously fixed.
 
 ```{r}
-## FUNCTION TO PROCESS DATA ####################################################
 processData <- function(df,allHeights){
-  
+## FUNCTION TO PROCESS DATA ####################################################
 # Defining the sensors' names
   allSensors = list("huragl","psagl","taagl","wdiragl","windagl")
 # New data frame to receive processed data
   dfProcessed <- df["time"]
-# Converting time data from character format to timestamp - only need for plotting
-  #dfProcessed$time <- strptime(dfProcessed$time, "%Y-%m-%d %H:%M:%S") 
-  
+
   for (sensor in allSensors){
     for (height in allHeights){
     # Sensor full name
@@ -71,8 +69,7 @@ In the next code cell/chunk we call the function that displays which
 sensor was found.
 
 ```{r}
-## Calling the processData function ############################################
-allHeights = list(21,70,116) #list of heights
+allHeights = list(21,70,116) # list of heights
 dfProcessed <- processData(df,allHeights)
 ```
 
@@ -91,3 +88,10 @@ saveFileName = paste(getwd(),'/',"2009_avg",".csv", sep = "")
 write.csv(dfProcessed, saveFileName, row.names=FALSE, quote=FALSE, 
           fileEncoding = "UTF-8")
 ```
+
+
+
+
+
+
+
